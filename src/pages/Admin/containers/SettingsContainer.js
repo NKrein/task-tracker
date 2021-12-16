@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 const SettingsContainer = () => {
+
+  const { currentUser } = useContext(AuthContext);
+
   return (
-    <div>
-      Config Page
-    </div>
+    <>
+    {currentUser?
+      <div>
+        Config Page
+      </div>
+    :
+      <Navigate to='/admin' />
+    }
+    </>
   )
 }
 

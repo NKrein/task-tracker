@@ -12,10 +12,10 @@ const UserWarning = () => {
     <Container>
       <Row>
         <Col sm={12}>
-          <h3>Está logueado como {currentUser.email}, para continuar debe cerrar sesión.</h3>
+          <h3>Está logueado como {currentUser.email}, ¿qué desea hacer?.</h3>
         </Col>
         <Col sm={12}>
-          <Button type='button' variant="outline-warning" onClick={() => logOut()} >Continuar</Button>        
+          <Button type='button' variant="outline-warning" onClick={() => logOut()} >Cerrar sesión</Button>        
         </Col>
         <Col sm={12}>
           <Link to='/admin/dashboard'><Button type='button' variant="outline-dark">Volver al Dashboard</Button></Link>        

@@ -1,0 +1,22 @@
+.brandLink {
+  text-decoration: none;
+  color: rgba(255,255,255,.55);
+  margin: .5rem 2rem;
+  font-size: x-large;
+}
+.brandLink:hover {
+  color: coral;
+}
+.link, .nav-link {
+  display: inline;
+  text-decoration: none;
+  color: rgba(255,255,255,.55);
+  align-self: center;
+}
+.link:hover, .nav-link:hover {
+  color: coral;
+}
+.currentLink {
+  text-decoration: none;
+  color: coral;
+}

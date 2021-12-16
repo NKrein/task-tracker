@@ -6,13 +6,14 @@ import Door from './pages/Door';
 import Home from './pages/Home';
 import AuthContextProvider from './context/AuthContext';
 import Signup from './pages/Signup';
+import NavBar from './commonComponents/NavBar';
 
 function App() {
   return (
     <div className="App">
       <AuthContextProvider>
         <BrowserRouter>
-          <h1>Nav</h1>
+          <NavBar />
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/signup' element={<Signup />} />
