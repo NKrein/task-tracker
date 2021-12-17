@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row, Form, FloatingLabel, Button } from 'react-bootstrap';
 
-const UserForm = ({ handleSubmit, handleChange, repassword = false, title = 'Sign', isInvalid = false }) => {
+const UserForm = ({ handleSubmit, handleChange, signUp = false, title = 'Sign', isInvalid = false }) => {
   return (
     <Container>
       <Row>
@@ -10,15 +10,20 @@ const UserForm = ({ handleSubmit, handleChange, repassword = false, title = 'Sig
         </Col>
         <Col xs={12} md={{ span: 6, offset: 3 }}>
           <Form onSubmit={handleSubmit}>
+            {signUp &&
+              <FloatingLabel controlId="floatingName" label="Nombre" className="mb-3">
+                <Form.Control type="text" name="name" placeholder="Name" onChange={handleChange} required />
+              </FloatingLabel>
+            }
             <FloatingLabel controlId="floatingInput" label="Email" className="mb-3">
-              <Form.Control type="email" name="email" placeholder="name@example.com" onChange={handleChange} required/>
+              <Form.Control type="email" name="email" placeholder="name@example.com" onChange={handleChange} required />
             </FloatingLabel>
             <FloatingLabel controlId="floatingPassword" label="Contraseña" className="mb-3">
-              <Form.Control type="password" name="password" placeholder="Password" onChange={handleChange} required/>
+              <Form.Control type="password" name="password" placeholder="Password" onChange={handleChange} required />
             </FloatingLabel>
-            {repassword &&
+            {signUp &&
               <FloatingLabel controlId="floatingrePassword" label="Confirme contraseña" className="mb-3">
-                <Form.Control type="password" name="repassword" placeholder="Password" onChange={handleChange} required isInvalid={isInvalid}/>
+                <Form.Control type="password" name="repassword" placeholder="Password" onChange={handleChange} required isInvalid={isInvalid} />
                 <Form.Control.Feedback type="invalid">No coinciden las contraseñas</Form.Control.Feedback>
               </FloatingLabel>
             }

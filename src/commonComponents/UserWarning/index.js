@@ -12,13 +12,13 @@ const UserWarning = () => {
     <Container>
       <Row>
         <Col sm={12}>
-          <h3>Está logueado como {currentUser.email}, ¿qué desea hacer?.</h3>
+          <h3>Está logueado como {currentUser.displayName}, ¿qué desea hacer?.</h3>
         </Col>
         <Col sm={12}>
           <Button type='button' variant="outline-warning" onClick={() => logOut()} >Cerrar sesión</Button>        
         </Col>
         <Col sm={12}>
-          <Link to='/admin/dashboard'><Button type='button' variant="outline-dark">Volver al Dashboard</Button></Link>        
+          <Link to='/admin/dashboard'><Button type='button' variant="outline-dark">Ir al Dashboard</Button></Link>        
         </Col>
       </Row>
     </Container>

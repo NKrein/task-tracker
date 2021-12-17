@@ -12,6 +12,7 @@
   text-decoration: none;
   color: rgba(255,255,255,.55);
   align-self: center;
+  margin: 0 .5rem;
 }
 .link:hover, .nav-link:hover {
   color: coral;
@@ -19,4 +20,7 @@
 .currentLink {
   text-decoration: none;
   color: coral;
+}
+.alert {
+  margin-bottom: 0%;
 }
