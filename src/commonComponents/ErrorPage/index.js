@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ErrorPage = ( { text = 'No se encontró la página solicitada.' } ) => {
+const ErrorPage = ( { text = 'Page not found' } ) => {
   return (
     <div>
       <p>404 Error:</p>
       <p>{text}</p>
-      <p>Intente nuevamente más tarde, o dirigase al inicio.</p>
+      <p>Try later, or go back.</p>
     </div>
   )
 }

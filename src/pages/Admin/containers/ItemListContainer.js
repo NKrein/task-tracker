@@ -1,0 +1,50 @@
+import React, { useContext, useState, useEffect } from 'react';
+import { Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import Item from '../../../commonComponents/Item';
+import { AuthContext } from '../../../context/AuthContext';
+import { getFirestore } from '../../../services';
+
+const ItemListContainer = () => {
+
+  const { currentUser } = useContext(AuthContext);
+  const { stage } = useParams();
+  const [ loading, setLoading ] = useState(false);
+  const [ items, setItems ] = useState([]);
+  const [ err, setErr ] = useState('');
+  const [ warn, setWarn ] = useState('');
+
+  useEffect(()=>{
+      setLoading(true);
+      const db = getFirestore();
+      const itemCollection = stage? db.collection(`${currentUser.uid}`).where('status', '==', `${stage}`) : db.collection(`${currentUser.uid}`);
+  
+      itemCollection.get().then((querySnapshot) => {
+        if (querySnapshot.size === 0){
+          setWarn(`No results for ${currentUser.displayName}`);
+        } else {
+          setItems(querySnapshot.docs.map(doc => { return { id: doc.id, ...doc.data()} }));
+        }
+      })
+      .catch(error => {
+        console.log('error', error);
+        setErr('Error al traer datos ->' + error);
+      })
+      .finally(() => {
+        setLoading(false);
+      })  
+  }, [stage]);
+
+  console.log(items)
+
+  return (
+    <>
+      {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
+      {warn && <Alert variant='danger' onClose={() => setWarn('')} dismissible>{warn}</Alert>}
+      {items.length && !loading ? items.map(element => <Item key={element.id} item={element} />) : <Link className='link' to='/admin/new'>Add a new task</Link>}
+    </>
+  )
+}
+
+export default ItemListContainer;

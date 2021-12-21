@@ -24,3 +24,19 @@
 .alert {
   margin-bottom: 0%;
 }
+.dropdown-link{
+  text-decoration: none;
+  color:darkgrey;
+  align-self: stretch;
+}
+.dropdown-link:hover {
+  color: coral;
+}
+.dropdown-item {
+  color: inherit;
+  background-color: inherit;
+}
+.dropdown-item:hover {
+  color: inherit;
+  background-color: inherit;
+}

@@ -16,24 +16,25 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <NavLink to='/admin/dashboard' className={({isActive}) => 'link' + (isActive ? ' currentLink' : '')}>Dashboard</NavLink>
-              <NavDropdown title="Ver tareas" id="collasible-nav-dropdown">
-                <NavDropdown.Item href='/admin/list/not-started'><Alert variant='danger' >Not started</Alert></NavDropdown.Item>
-                <NavDropdown.Item href='/admin/list/in-progress'><Alert variant='warning' >In progress</Alert></NavDropdown.Item>
-                <NavDropdown.Item href='/admin/list/complete'><Alert variant='success' >Completed</Alert></NavDropdown.Item>
+              <NavLink to='/admin/new' className={({ isActive }) => 'link' + (isActive ? ' currentLink' : '')}>New</NavLink>
+              <NavLink to='/admin/dashboard' className={({ isActive }) => 'link' + (isActive ? ' currentLink' : '')}>Dashboard</NavLink>
+              <NavDropdown title="View Tasks" id="collasible-nav-dropdown">
+                <NavDropdown.Item as='span'><Link to='/admin/list/not-started' className='dropdown-link'><Alert variant='danger' >Not started</Alert></Link></NavDropdown.Item>
+                <NavDropdown.Item as='span'><Link to='/admin/list/in-progress' className='dropdown-link'><Alert variant='warning' >In progress</Alert></Link></NavDropdown.Item>
+                <NavDropdown.Item as='span'><Link to='/admin/list/complete' className='dropdown-link'><Alert variant='success' >Completed</Alert></Link></NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href='/admin/list'>View all</NavDropdown.Item>
+                <NavDropdown.Item as='span'><Link to='/admin/list/' className='dropdown-link'>View all</Link></NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <Nav>
-              <NavLink to='/admin/settings' className={({isActive}) => 'link' + (isActive ? ' currentLink' : '')}>{currentUser.displayName ? currentUser.displayName : currentUser.email}</NavLink>
-              <Button variant='dark' onClick={() => logOut()}>Cerrar sesión</Button>
+              <NavLink to='/admin/settings' className={({ isActive }) => 'link' + (isActive ? ' currentLink' : '')}>{currentUser.displayName ? currentUser.displayName : currentUser.email}</NavLink>
+              <Button variant='dark' onClick={() => logOut()}>Log Out</Button>
             </Nav>
           </Navbar.Collapse>
         </> :
           <Nav>
-            <NavLink to='/signup' className={({isActive}) => 'link' + (isActive ? ' currentLink' : '')}>Registrarse</NavLink>
-            <NavLink to='/admin' className={({isActive}) => 'link' + (isActive ? ' currentLink' : '')}>Iniciar Sesión</NavLink>
+            <NavLink to='/signup' className={({ isActive }) => 'link' + (isActive ? ' currentLink' : '')}>Sign Up</NavLink>
+            <NavLink to='/admin' className={({ isActive }) => 'link' + (isActive ? ' currentLink' : '')}>Log In</NavLink>
           </Nav>
         }
       </Container>

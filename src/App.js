@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import AuthContextProvider from './context/AuthContext';
 import Signup from './pages/Signup';
 import NavBar from './commonComponents/NavBar';
+import ErrorPage from './commonComponents/ErrorPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/admin/*' element={<Admin />} />
+            <Route path='*' element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       </AuthContextProvider>
