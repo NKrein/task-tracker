@@ -1,0 +1,24 @@
+footer {
+  height: 5vh;
+  background-color: rgb(33,37,41);
+  color: coral;
+}
+p {
+  padding-top: .5rem;
+  color:lightslategray;
+  font-size: smaller;
+}
+
+@media (max-width: 767px) {
+  footer {
+    height: 5vh;
+    margin-top: 2vh;
+  }  
+}
+
+@media (max-width: 500px) {
+  footer {
+    height: 8vh;
+    margin-top: 2vh;
+  }  
+}

@@ -7,6 +7,7 @@ import AuthContextProvider from './context/AuthContext';
 import Signup from './pages/Signup';
 import NavBar from './commonComponents/NavBar';
 import ErrorPage from './commonComponents/ErrorPage';
+import Footer from './commonComponents/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path='/admin/*' element={<Admin />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </AuthContextProvider>
     </div>

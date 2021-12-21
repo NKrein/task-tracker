@@ -7,7 +7,7 @@ import { getFirestore } from '../../../services';
 
 const TaskFormContainer = () => {
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, timeNow } = useContext(AuthContext);
 
   const [dataForm, setDataForm] = useState({ status: 'not-started' });
   const [taskId, setTaskId] = useState('');
@@ -26,14 +26,16 @@ const TaskFormContainer = () => {
     e.preventDefault();
     setLoading(true)
     const db = getFirestore()
-    db.collection(`${currentUser.uid}`).add(dataForm)
+    const date = timeNow;
+    db.collection(`${currentUser.uid}`).add({...dataForm, date})
       .then((docRef) => {
         setErr('');
         setSuccess(`Task saved successfully with id: ${docRef.id}`);
         setTaskId(docRef.id)
       })
       .catch((error) => {
-        setErr(`Ups, something is going wrong. (${error})`);
+        setErr(`Ups, something is going wrong.`);
+        console.log('Error ->', error);
       })
       .finally(() => setLoading(false));
   }

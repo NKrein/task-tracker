@@ -3,6 +3,7 @@ import { Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Item from '../../../commonComponents/Item';
+import Loader from '../../../commonComponents/Loader';
 import { AuthContext } from '../../../context/AuthContext';
 import { getFirestore } from '../../../services';
 
@@ -18,18 +19,18 @@ const ItemListContainer = () => {
   useEffect(()=>{
       setLoading(true);
       const db = getFirestore();
-      const itemCollection = stage? db.collection(`${currentUser.uid}`).where('status', '==', `${stage}`) : db.collection(`${currentUser.uid}`);
+      const itemCollection = stage? db.collection(`${currentUser.uid}`).where('status', '==', `${stage}`).orderBy('date', 'desc') : db.collection(`${currentUser.uid}`).orderBy('date', 'desc');
   
       itemCollection.get().then((querySnapshot) => {
         if (querySnapshot.size === 0){
-          setWarn(`No results for ${currentUser.displayName}`);
+          setWarn(`No results`);
         } else {
           setItems(querySnapshot.docs.map(doc => { return { id: doc.id, ...doc.data()} }));
         }
       })
       .catch(error => {
         console.log('error', error);
-        setErr('Error al traer datos ->' + error);
+        setErr('Error al traer datos');
       })
       .finally(() => {
         setLoading(false);
@@ -42,7 +43,7 @@ const ItemListContainer = () => {
     <>
       {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
       {warn && <Alert variant='danger' onClose={() => setWarn('')} dismissible>{warn}</Alert>}
-      {items.length && !loading ? items.map(element => <Item key={element.id} item={element} />) : <Link className='link' to='/admin/new'>Add a new task</Link>}
+      {items.length && !loading ? items.map(element => <Item key={element.id} item={element} />) : <Loader />}
     </>
   )
 }
