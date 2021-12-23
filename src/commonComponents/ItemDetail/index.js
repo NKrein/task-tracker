@@ -1,9 +1,9 @@
 import React from 'react';
-import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, FloatingLabel , Row } from 'react-bootstrap';
 import './style.css';
 
 
-const ItemDetail = ({ item, handleChange, handleSubmit }) => {
+const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus }) => {
   return (
     <Container>
       <Row className='infoContainer'>
@@ -15,6 +15,13 @@ const ItemDetail = ({ item, handleChange, handleSubmit }) => {
           <Alert variant={item.status === 'complete' ? 'success' : item.status === 'in-progress' ? 'warning' : 'danger'}>
             {item.status}
           </Alert>
+          <FloatingLabel controlId="floatingSelect" label="Mark as" className="mb-3" required>
+              <Form.Select name="status" aria-label="Floating label select example" defaultValue={item.status} onChange={handleStatus}>
+                <option value="not-started">Not Started</option>
+                <option value="in-progress">In Progress</option>
+                <option value="complete">Complete</option>
+              </Form.Select>
+            </FloatingLabel>
         </Col>
         <Col as='form' xs={12} md={6} className='checkSide' onSubmit={handleSubmit}>
           {item.checklist &&
@@ -67,7 +74,7 @@ const ItemDetail = ({ item, handleChange, handleSubmit }) => {
                 defaultChecked={item.checklist.repository}
                 onChange={handleChange}
               />
-            </> 
+            </>
           }
           <Button type='submit' variant='success'>Save</Button>
         </Col>

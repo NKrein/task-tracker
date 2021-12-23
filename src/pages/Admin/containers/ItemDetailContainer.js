@@ -15,7 +15,13 @@ const ItemDetailContainer = () => {
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false);
   const [checklist, setChecklist] = useState({});
+  const [status, setStatus] = useState('');
   const [isUpdated, setIsUpdated] = useState(false);
+
+
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+  }
 
   const handleChange = (e) => {
     setChecklist({
@@ -26,44 +32,56 @@ const ItemDetailContainer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(checklist);
-    //HACER QUE ACTUALICE CHECKLIST EN FIREBASE
     setLoading(true);
     const item = getFirestore().collection(`${currentUser.uid}`).doc(itemId);
-    item.update({ checklist: {...checklist} })
-    .then(() => {
-      setSuccess('Checklist updated!');
-      setIsUpdated(!isUpdated);
-    })
-    .catch(() => { setErr('Checklist update failed. Try later!') })
-    .finally(() => { setLoading(false) });
+    item.update({ checklist: { ...checklist } })
+      .then(() => {
+        setSuccess('Checklist updated!');
+        setIsUpdated(!isUpdated);
+      })
+      .catch(() => { setErr('Checklist update failed. Try later!') })
+      .finally(() => { setLoading(false) });
   }
 
   useEffect(() => {
     setLoading(true);
     const db = getFirestore();
     const getItem = db.collection(`${currentUser.uid}`).doc(itemId);
-    getItem.get().then((docRef)=> {
+    getItem.get().then((docRef) => {
       if (docRef.data()) {
         setItem({ id: docRef.id, ...docRef.data() });
         setChecklist(docRef.data().checklist);
       } else {
         setErr('Id item does not match');
       }
-    }).catch( error => {
+    }).catch(error => {
       console.log('Error to get item->', error);
       setErr('Error to get Item');
     }).finally(() => setLoading(false));
   }, [itemId, isUpdated]);
+
+  useEffect(() => {
+    if (status) {
+      setLoading(true);
+      const item = getFirestore().collection(`${currentUser.uid}`).doc(itemId);
+      item.update({ status: status })
+      .then(() => {
+        setSuccess('Status updated!');
+        setIsUpdated(!isUpdated);
+      })
+      .catch(() => { setErr('Status update failed. Try later!') })
+      .finally(() => { setLoading(false) });
+    }
+  }, [status]);
 
   if (currentUser) {
     return (
       <>
         {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
         {success && <Alert variant='success' onClose={() => setSuccess('')} dismissible>{success}</Alert>}
-        {item && !loading ? <ItemDetail item={item} handleChange={handleChange} handleSubmit={handleSubmit} /> : <Loader />}
+        {item && !loading ? <ItemDetail item={item} handleChange={handleChange} handleSubmit={handleSubmit} handleStatus={handleStatus} /> : <Loader />}
       </>
-    )  
+    )
   } else {
     return <Navigate to='/admin' />
   }
