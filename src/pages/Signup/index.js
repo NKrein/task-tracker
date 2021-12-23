@@ -9,7 +9,7 @@ const SignupContainer = () => {
   const [dataForm, setDataForm] = useState({});
   const [success, setSuccess] = useState();
   const [error, setError] = useState();
-  const { signUp, currentUser, userUpdate } = useContext(AuthContext);
+  const { signUp, currentUser, userUpdate, emailVerification } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setDataForm({
@@ -22,13 +22,17 @@ const SignupContainer = () => {
     e.preventDefault();
     signUp(dataForm.email, dataForm.password).then( () => {
       setError('');
-      userUpdate(dataForm.name).then( () => setSuccess('Todo listo. Verifica tu email.')).catch((err) => {
-        setError('Error al cargar Nombre de usuario');
-        console.log('Error al cargar Nombre de usuario ->', err)
+      userUpdate(dataForm.name).then( () => setSuccess('Profile updated.')).catch((err) => {
+        setError('Error changing profile name');
+        console.log('Error changing profile name ->', err)
       });
-      setSuccess('Éxito!');
+      emailVerification().then(() => setSuccess('Everything is fine. Now verify your email.')).catch((err) => {
+        setError('Error sending email verification.');
+        console.log('Error sending email verification ->', err)
+      })
+      setSuccess('Successful!');
     }).catch( err => {
-      setError(`Error al registrar usuario. (${err.message})`);
+      setError(`Error to sign up. (${err.message})`);
     })
   }
 
@@ -42,7 +46,7 @@ const SignupContainer = () => {
       {error && <Alert variant='warning'>{error}</Alert>}
       {currentUser?
         <UserWarning /> :
-        <UserForm handleChange={handleChange} handleSubmit={handleSubmit} title='Registrarse' signUp isInvalid={isInvalid()} />
+        <UserForm handleChange={handleChange} handleSubmit={handleSubmit} title='Sign Up' signUp isInvalid={isInvalid()} />
       }
     </>
   )

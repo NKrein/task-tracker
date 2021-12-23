@@ -12,6 +12,11 @@ const AuthContextProvider = ( { children } ) => {
   const signUp = (email, password) => {
     return auth().createUserWithEmailAndPassword(email, password)
   }
+
+  const emailVerification = () => {
+    return auth().currentUser.sendEmailVerification()
+  }
+
   const userUpdate = (name, photo='https://firebasestorage.googleapis.com/v0/b/task-tracker-e0844.appspot.com/o/user.png?alt=media&token=b2ff7a06-41af-4166-8819-af6d6cd1137e') => {
     return auth().currentUser.updateProfile({
       displayName: name,
@@ -77,7 +82,8 @@ const AuthContextProvider = ( { children } ) => {
 
   const value = { 
     currentUser, 
-    signUp, 
+    signUp,
+    emailVerification,
     userUpdate,
     logIn, 
     logOut, 

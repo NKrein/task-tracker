@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import './style.css';
 
 
 const UserWarning = () => {
@@ -9,19 +10,11 @@ const UserWarning = () => {
   const { currentUser, logOut } = useContext(AuthContext);
 
   return (
-    <Container>
-      <Row>
-        <Col sm={12}>
-          <h3>Está logueado como {currentUser.displayName}, ¿qué desea hacer?.</h3>
-        </Col>
-        <Col sm={12}>
-          <Button type='button' variant="outline-warning" onClick={() => logOut()} >Cerrar sesión</Button>        
-        </Col>
-        <Col sm={12}>
-          <Link to='/admin/dashboard'><Button type='button' variant="outline-dark">Ir al Dashboard</Button></Link>        
-        </Col>
-      </Row>
-    </Container>
+    <div className='userPanel'>
+      <h3>You are in, now as {currentUser.displayName}. What would you like to do?</h3>
+      <Button type='button' variant="outline-warning" onClick={() => logOut()} >Log Out</Button>
+      <Link to='/admin/dashboard'><Button type='button' variant="outline-dark">Go to Dashboard</Button></Link>
+    </div>
   )
 }
 
