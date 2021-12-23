@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Item from '../../../commonComponents/Item';
 import Loader from '../../../commonComponents/Loader';
@@ -37,15 +37,17 @@ const ItemListContainer = () => {
       })  
   }, [stage]);
 
-  console.log(items)
-
-  return (
-    <>
-      {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
-      {warn && <Alert variant='danger' onClose={() => setWarn('')} dismissible>{warn}</Alert>}
-      {items.length && !loading ? items.map(element => <Item key={element.id} item={element} />) : <Loader />}
-    </>
-  )
+  if (currentUser) {
+    return (
+      <>
+        {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
+        {warn && <Alert variant='danger' onClose={() => setWarn('')} dismissible>{warn}</Alert>}
+        {items.length && !loading ? items.map(element => <Item key={element.id} item={element} />) : <Loader />}
+      </>
+    )  
+  } else {
+    return <Navigate to='/admin' />
+  }
 }
 
 export default ItemListContainer;

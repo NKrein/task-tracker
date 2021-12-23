@@ -1,0 +1,13 @@
+.itemCard {
+  text-decoration: none;
+  color: inherit;
+  background-color: rgb(167, 169, 170);
+  border-radius: .25rem;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.itemCard:hover {
+  text-decoration: none;
+  color: inherit;
+}

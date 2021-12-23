@@ -1,0 +1,22 @@
+.checkSide {
+  text-align: left;
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: center;
+  justify-content: space-evenly;
+  background-color: floralwhite;
+  border-radius: 1rem;
+  margin: 1rem 0;
+}
+.infoSide {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+.infoContainer {
+  min-height: 70vh;
+}
+.form-check-input:checked {
+  background-color: seagreen;
+  border-color: seagreen;
+}

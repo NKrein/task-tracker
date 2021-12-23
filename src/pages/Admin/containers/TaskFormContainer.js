@@ -9,7 +9,19 @@ const TaskFormContainer = () => {
 
   const { currentUser, timeNow } = useContext(AuthContext);
 
-  const [dataForm, setDataForm] = useState({ status: 'not-started' });
+  const defaultDataForm = {
+    status: 'not-started',
+    checklist: {
+      development: false,
+      test: false,
+      bugs: false,
+      retest: false,
+      deployment: false,
+      repository: false
+    }
+  };
+
+  const [dataForm, setDataForm] = useState(defaultDataForm);
   const [taskId, setTaskId] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
@@ -40,15 +52,18 @@ const TaskFormContainer = () => {
       .finally(() => setLoading(false));
   }
 
-
-  return (
-    <>
-      {success && <Alert variant='success' onClose={() => setSuccess('')} dismissible>{success}</Alert>}
-      {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
-      <TaskForm handleChange={handleChange} handleSubmit={handleSubmit} title='New Task' disabledButton={loading} />
-      {taskId && <Navigate to={`/admin/task/${taskId}`} />}
-    </>
-  )
+  if (currentUser) {
+    return (
+      <>
+        {success && <Alert variant='success' onClose={() => setSuccess('')} dismissible>{success}</Alert>}
+        {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
+        <TaskForm handleChange={handleChange} handleSubmit={handleSubmit} title='New Task' disabledButton={loading} />
+        {taskId && <Navigate to={`/admin/view/${taskId}`} />}
+      </>
+    )  
+  } else {
+    return <Navigate to='/admin' />
+  }
 }
 
 export default TaskFormContainer
