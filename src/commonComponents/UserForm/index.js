@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Col, Container, Row, Form, FloatingLabel, Button } from 'react-bootstrap';
+import { AuthContext } from '../../context/AuthContext';
+import googleIcon from '../../images/google.png';
 
 const UserForm = ({ handleSubmit, handleChange, signUp = false, title = 'Sign', isInvalid = false }) => {
+
+  const { googleLogIn } = useContext(AuthContext);
+
   return (
     <Container>
       <Row>
@@ -30,7 +35,7 @@ const UserForm = ({ handleSubmit, handleChange, signUp = false, title = 'Sign', 
             <Button type='submit' variant="outline-dark" disabled={isInvalid}>{title}</Button>
           </Form>
           <hr />
-          <p>With Google</p>
+          <Button variant="outline-dark" onClick={googleLogIn}>With Google <img width="30px" src={googleIcon} alt="Inicio google"/></Button>
         </Col>
       </Row>
     </Container>

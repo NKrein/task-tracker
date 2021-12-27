@@ -31,3 +31,7 @@ export const getStorage = () => {
 export const auth = () => {
   return app.auth();
 }
+
+export const googleAuth = () => {
+  return new firebase.auth.GoogleAuthProvider();
+}
