@@ -6,7 +6,7 @@ import './style.css';
 const Footer = () => {
   return (
     <footer>
-      <p>Todos los derechos reservados | Copyright © 2022 Task-tracker | <Link to={{ pathname: 'https://github.com/NKrein' }} className='currentLink' target="_blank">Desarrollo por NKrein</Link></p>
+      <p>Copyright © 2022 Task-tracker | <Link to={{ pathname: 'https://github.com/NKrein' }} className='currentLink' target="_blank">By NKrein</Link></p>
     </footer>
   )
 }

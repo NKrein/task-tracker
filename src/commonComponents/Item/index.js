@@ -27,7 +27,7 @@ const Item = ({ item }) => {
             <p>{item.type}</p>
           </Col>
           <Col xs={6} md={4}>
-            <p>Hace {timeAgo(item.date)}</p>
+            <p>{timeAgo(item.date)} ago</p>
           </Col>
         </Row>
       </Container>

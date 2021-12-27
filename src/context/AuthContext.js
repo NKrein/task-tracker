@@ -59,15 +59,15 @@ const AuthContextProvider = ( { children } ) => {
 
   const timeAgo = (millis) => {
     if (minAgo(millis)>=60 && hsAgo(millis)<24){
-      return `${Math.floor(hsAgo(millis))} hora${Math.floor(hsAgo(millis))>1 ? 's' : ''}`
+      return `${Math.floor(hsAgo(millis))} hour${Math.floor(hsAgo(millis))>1 ? 's' : ''}`
     } else if (hsAgo(millis)>=24 && daysAgo(millis)<30){
-      return `${Math.floor(daysAgo(millis))} dia${Math.floor(daysAgo(millis))>1 ? 's' : ''}`
+      return `${Math.floor(daysAgo(millis))} day${Math.floor(daysAgo(millis))>1 ? 's' : ''}`
     } else if (daysAgo(millis)>=30 && monthAgo(millis)<12){
-      return `${Math.floor(monthAgo(millis))} mese${Math.floor(monthAgo(millis))>1 ? 's' : ''}`
+      return `${Math.floor(monthAgo(millis))} month${Math.floor(monthAgo(millis))>1 ? 's' : ''}`
     } else if (monthAgo(millis)>=12) {
-      return `${Math.floor(monthAgo(millis)/12)} año${Math.floor(monthAgo(millis)/12)>1 ? 's' : ''}`
+      return `${Math.floor(monthAgo(millis)/12)} year${Math.floor(monthAgo(millis)/12)>1 ? 's' : ''}`
     } else {
-      return `${Math.floor(minAgo(millis))} minuto${Math.floor(minAgo(millis))>1 ? 's' : ''}`
+      return `${Math.floor(minAgo(millis))} minute${Math.floor(minAgo(millis))>1 ? 's' : ''}`
     }
   }
   //--------------------------------------------------------------------

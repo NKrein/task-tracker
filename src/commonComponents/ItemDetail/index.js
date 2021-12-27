@@ -1,9 +1,9 @@
 import React from 'react';
-import { Alert, Button, Col, Container, Form, FloatingLabel , Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, FloatingLabel, Row } from 'react-bootstrap';
 import './style.css';
 
 
-const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus }) => {
+const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus, handleEdit, setDeleteItem, deleteItem, handleDelete }) => {
   return (
     <Container>
       <Row className='infoContainer'>
@@ -16,12 +16,24 @@ const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus }) => {
             {item.status}
           </Alert>
           <FloatingLabel controlId="floatingSelect" label="Mark as" className="mb-3" required>
-              <Form.Select name="status" aria-label="Floating label select example" defaultValue={item.status} onChange={handleStatus}>
-                <option value="not-started">Not Started</option>
-                <option value="in-progress">In Progress</option>
-                <option value="complete">Complete</option>
-              </Form.Select>
-            </FloatingLabel>
+            <Form.Select name="status" aria-label="Floating label select example" defaultValue={item.status} onChange={handleStatus}>
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </Form.Select>
+          </FloatingLabel>
+          <div className='button-box'>
+            <Button variant="outline-success" onClick={handleEdit}>Edit</Button>
+            {deleteItem ?
+              <div>
+                <p>Are you sure?</p>
+                <Button variant="outline-warning" onClick={() => setDeleteItem(false)}>Not</Button>
+                <Button variant="outline-warning" onClick={() => handleDelete()}>Yes</Button>
+              </div>
+              :
+              <Button variant="outline-danger" onClick={() => setDeleteItem(true)}>Delete</Button>
+            }
+          </div>
         </Col>
         <Col as='form' xs={12} md={6} className='checkSide' onSubmit={handleSubmit}>
           {item.checklist &&

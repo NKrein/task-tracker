@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert } from 'react-bootstrap';
-import { Navigate, useParams } from 'react-router-dom';
+import { Alert, Modal } from 'react-bootstrap';
+import {Navigate, useNavigate, useParams } from 'react-router-dom';
 import ItemDetail from '../../../commonComponents/ItemDetail';
 import Loader from '../../../commonComponents/Loader';
+import TaskForm from '../../../commonComponents/TaskForm';
 import { AuthContext } from '../../../context/AuthContext';
 import { getFirestore } from '../../../services';
 
@@ -12,12 +13,18 @@ const ItemDetailContainer = () => {
   const { itemId } = useParams();
   const [item, setItem] = useState({});
   const [err, setErr] = useState('');
-  const [success, setSuccess] = useState('')
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  //Update
   const [checklist, setChecklist] = useState({});
   const [status, setStatus] = useState('');
   const [isUpdated, setIsUpdated] = useState(false);
-
+  //Modal
+  const [edit, setEdit] = useState(false);
+  const [formInfo, setFormInfo] = useState({});
+  //Delete
+  const [deleteItem, setDeleteItem] = useState(false);
+  const navigate = useNavigate();
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
@@ -28,6 +35,39 @@ const ItemDetailContainer = () => {
       ...checklist,
       [e.target.name]: e.target.checked,
     });
+  }
+
+  const handleFormChange = (e) => {
+    setFormInfo({
+      ...formInfo,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setEdit(false);
+    setLoading(true);
+    const item = getFirestore().collection(`${currentUser.uid}`).doc(itemId);
+    item.update({ ...formInfo })
+      .then(() => {
+        setSuccess('Task info updated!');
+        setIsUpdated(!isUpdated);
+      })
+      .catch(() => { setErr('Task update failed. Try later!') })
+      .finally(() => { setLoading(false) });
+  }
+
+  const handleDelete = () => {
+    const item = getFirestore().collection(`${currentUser.uid}`).doc(itemId);
+    item.delete()
+      .then(() => {
+        setSuccess('Task deleted.');
+        navigate(-1);
+      })
+      .catch(() => { setErr('Task delete failed. Try later!') })
+      .finally(() => { setLoading(false) });
+
   }
 
   const handleSubmit = (e) => {
@@ -65,12 +105,12 @@ const ItemDetailContainer = () => {
       setLoading(true);
       const item = getFirestore().collection(`${currentUser.uid}`).doc(itemId);
       item.update({ status: status })
-      .then(() => {
-        setSuccess('Status updated!');
-        setIsUpdated(!isUpdated);
-      })
-      .catch(() => { setErr('Status update failed. Try later!') })
-      .finally(() => { setLoading(false) });
+        .then(() => {
+          setSuccess('Status updated!');
+          setIsUpdated(!isUpdated);
+        })
+        .catch(() => { setErr('Status update failed. Try later!') })
+        .finally(() => { setLoading(false) });
     }
   }, [status]);
 
@@ -79,7 +119,32 @@ const ItemDetailContainer = () => {
       <>
         {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
         {success && <Alert variant='success' onClose={() => setSuccess('')} dismissible>{success}</Alert>}
-        {item && !loading ? <ItemDetail item={item} handleChange={handleChange} handleSubmit={handleSubmit} handleStatus={handleStatus} /> : <Loader />}
+        {item && !loading ?
+          <ItemDetail
+            item={item}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            handleStatus={handleStatus}
+            handleEdit={() => setEdit(true)}
+            setDeleteItem={setDeleteItem}
+            deleteItem={deleteItem}
+            handleDelete={handleDelete}
+          />
+          : <Loader />
+        }
+        <Modal
+          show={edit}
+          onHide={() => setEdit(false)}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+          </Modal.Header>
+          <Modal.Body>
+            <TaskForm title='Edit task' objEdit={item} handleChange={handleFormChange} handleSubmit={handleFormSubmit} />
+          </Modal.Body>
+        </Modal>
       </>
     )
   } else {
