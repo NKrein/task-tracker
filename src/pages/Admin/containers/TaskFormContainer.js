@@ -38,8 +38,9 @@ const TaskFormContainer = () => {
     e.preventDefault();
     setLoading(true)
     const db = getFirestore()
-    const date = timeNow;
-    db.collection(`${currentUser.uid}`).add({...dataForm, date})
+    const date = timeNow();
+    const modified = timeNow();
+    db.collection(`${currentUser.uid}`).add({...dataForm, date, modified})
       .then((docRef) => {
         setErr('');
         setSuccess(`Task saved successfully with id: ${docRef.id}`);

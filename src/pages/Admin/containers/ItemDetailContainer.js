@@ -9,7 +9,7 @@ import { getFirestore } from '../../../services';
 
 const ItemDetailContainer = () => {
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, timeNow } = useContext(AuthContext);
   const { itemId } = useParams();
   const [item, setItem] = useState({});
   const [err, setErr] = useState('');
@@ -74,7 +74,7 @@ const ItemDetailContainer = () => {
     e.preventDefault();
     setLoading(true);
     const item = getFirestore().collection(`${currentUser.uid}`).doc(itemId);
-    item.update({ checklist: { ...checklist } })
+    item.update({ checklist: { ...checklist }, modified: timeNow() })
       .then(() => {
         setSuccess('Checklist updated!');
         setIsUpdated(!isUpdated);
@@ -104,7 +104,7 @@ const ItemDetailContainer = () => {
     if (status) {
       setLoading(true);
       const item = getFirestore().collection(`${currentUser.uid}`).doc(itemId);
-      item.update({ status: status })
+      item.update({ status: status, modified: timeNow() })
         .then(() => {
           setSuccess('Status updated!');
           setIsUpdated(!isUpdated);
@@ -119,7 +119,7 @@ const ItemDetailContainer = () => {
       <>
         {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
         {success && <Alert variant='success' onClose={() => setSuccess('')} dismissible>{success}</Alert>}
-        {item && !loading ?
+        {Object.keys(item).length !== 0 && !loading ?
           <ItemDetail
             item={item}
             handleChange={handleChange}

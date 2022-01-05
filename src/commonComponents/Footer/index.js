@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import React from 'react';
 import './style.css';
 
 const Footer = () => {
   return (
     <footer>
-      <p>Copyright © 2022 Task-tracker | <Link to={{ pathname: 'https://github.com/NKrein' }} className='currentLink' target="_blank">By NKrein</Link></p>
+      <p>Copyright © 2022 Task-tracker | <a href='https://github.com/NKrein' className='currentLink' target="_blank">By NKrein</a></p>
     </footer>
   )
 }

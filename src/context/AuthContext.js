@@ -47,10 +47,10 @@ const AuthContextProvider = ( { children } ) => {
   
   //---------------------------------------------------------------Time
 
-  const timeNow = firebase.firestore.Timestamp.fromDate(new Date())
+  const timeNow = () => firebase.firestore.Timestamp.fromDate(new Date())
 
   const minAgo = (millis) => {
-    return ((timeNow.toDate()-millis.toDate())/60000)
+    return ((timeNow().toDate()-millis.toDate())/60000)
   }
 
   const hsAgo = (millis) => {

@@ -42,7 +42,7 @@ const ItemListContainer = () => {
     return (
       <>
         {err && <Alert variant='danger' onClose={() => setErr('')} dismissible>{err}</Alert>}
-        {warn && <Alert variant='danger' onClose={() => setWarn('')} dismissible>{warn}</Alert>}
+        {warn && <Alert variant='warning' onClose={() => setWarn('')} dismissible>{warn}</Alert>}
         {items.length && !loading ? items.map(element => <Item key={element.id} item={element} />) : <Loader />}
       </>
     )  
