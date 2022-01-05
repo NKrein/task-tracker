@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import UserForm from '../../../commonComponents/UserForm';
-import UserWarning from '../../../commonComponents/UserWarning';
 import { AuthContext } from '../../../context/AuthContext';
 
 const LoginContainer = () => {
@@ -28,7 +27,7 @@ const LoginContainer = () => {
       {currentUser ?
         <Navigate to='/admin/dashboard' />
         :
-        <UserForm handleChange={handleChange} handleSubmit={handleSubmit} title='Ingresar' />
+        <UserForm handleChange={handleChange} handleSubmit={handleSubmit} title='Log in' />
       }  
     </>
   )

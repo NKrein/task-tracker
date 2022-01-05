@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 const AuthContextProvider = ( { children } ) => {
   
   const [currentUser, setCurrentUser] = useState(false);
+  const [userCredential, setUserCredential] = useState({});
 
   const signUp = (email, password) => {
     return auth().createUserWithEmailAndPassword(email, password)
@@ -27,8 +28,9 @@ const AuthContextProvider = ( { children } ) => {
     return auth().signInWithEmailAndPassword(email, password)
   }
 
-  const googleLogIn = () => {
-    return auth().signInWithPopup(googleAuth())
+  const googleLogIn = async () => {
+    const res = await auth().signInWithPopup(googleAuth());
+    return setUserCredential(res);
   }
 
   const logOut = () => {
@@ -37,6 +39,10 @@ const AuthContextProvider = ( { children } ) => {
 
   const resetPassword = (email) => {
     return auth().sendPasswordResetEmail(email)
+  }
+
+  const deleteUser = () => {
+    return auth().currentUser.delete()
   }
   
   //---------------------------------------------------------------Time
@@ -80,8 +86,6 @@ const AuthContextProvider = ( { children } ) => {
     })
   },[])
 
-  console.log(currentUser)
-
   const value = { 
     currentUser, 
     signUp,
@@ -90,7 +94,10 @@ const AuthContextProvider = ( { children } ) => {
     logIn, 
     googleLogIn,
     logOut, 
-    resetPassword, 
+    resetPassword,
+    deleteUser,
+    userCredential,
+    setUserCredential,
     timeNow, 
     timeAgo 
   }
