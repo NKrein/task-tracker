@@ -27,7 +27,7 @@ const Item = ({ item }) => {
             <p>{item.type}</p>
           </Col>
           <Col xs={6} md={4}>
-            <p>{timeAgo(item.date)} ago</p>
+            <p>{timeAgo(item.modified)} ago</p>
           </Col>
         </Row>
       </Container>

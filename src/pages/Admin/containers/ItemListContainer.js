@@ -19,7 +19,7 @@ const ItemListContainer = () => {
   useEffect(()=>{
       setLoading(true);
       const db = getFirestore();
-      const itemCollection = stage? db.collection(`${currentUser.uid}`).where('status', '==', `${stage}`) : db.collection(`${currentUser.uid}`).orderBy('date', 'desc');
+      const itemCollection = stage? db.collection(`${currentUser.uid}`).where('status', '==', `${stage}`) : db.collection(`${currentUser.uid}`).orderBy('modified', 'desc');
   
       itemCollection.get().then((querySnapshot) => {
         if (querySnapshot.size === 0){

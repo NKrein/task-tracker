@@ -16,6 +16,7 @@ const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus, handleEdit
           <p>{item.country}</p>
           <p>{item.type}</p>
           <a href={item.link} target="_blank" rel="noopener noreferrer">Link</a>
+          <p>Date: {item.date.toDate().toString()} ({timeAgo(item.date)} ago)</p>
           <p>Last changes {timeAgo(item.modified)} ago.</p>
           <Alert variant={item.status === 'complete' ? 'success' : item.status === 'in-progress' ? 'warning' : 'danger'}>
             {item.status}
