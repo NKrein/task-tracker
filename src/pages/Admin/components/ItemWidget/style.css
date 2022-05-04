@@ -1,0 +1,11 @@
+.itemWidgetCard {
+  text-decoration: none;
+  color: inherit;
+  border-radius: .25rem;
+  margin-bottom: 1rem;
+}
+
+.itemWidgetCard:hover {
+  text-decoration: none;
+  color: inherit;
+}

@@ -13,10 +13,7 @@ const TaskFormContainer = () => {
     status: 'not-started',
     checklist: {
       development: false,
-      test: false,
       bugs: false,
-      retest: false,
-      deployment: false,
       repository: false
     }
   };

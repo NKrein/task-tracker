@@ -11,7 +11,7 @@ const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus, handleEdit
   return (
     <Container>
       <Row className='infoContainer'>
-        <Col xs={12} md={6} className='infoSide'>
+        <Col xs={12} lg={{span: 6, offset: 2}} className='infoSide'>
           <p>{item.name}</p>
           <p>{item.country}</p>
           <p>{item.type}</p>
@@ -41,7 +41,7 @@ const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus, handleEdit
             }
           </div>
         </Col>
-        <Col as='form' xs={12} md={6} className='checkSide' onSubmit={handleSubmit}>
+        <Col as='form' xs={12} lg={2} className='checkSide' onSubmit={handleSubmit}>
           {item.checklist &&
             <>
               <Form.Check
@@ -54,34 +54,10 @@ const ItemDetail = ({ item, handleChange, handleSubmit, handleStatus, handleEdit
               />
               <Form.Check
                 type="switch"
-                id="switch-test"
-                label="Ready for testing"
-                name="test"
-                defaultChecked={item.checklist.test}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="switch"
                 id="switch-bugs"
                 label="Bugs"
                 name="bugs"
                 defaultChecked={item.checklist.bugs}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="switch"
-                id="switch-retest"
-                label="Retest"
-                name="retest"
-                defaultChecked={item.checklist.retest}
-                onChange={handleChange}
-              />
-              <Form.Check
-                type="switch"
-                id="switch-deployment"
-                label="Deployment"
-                name="deployment"
-                defaultChecked={item.checklist.deployment}
                 onChange={handleChange}
               />
               <Form.Check
